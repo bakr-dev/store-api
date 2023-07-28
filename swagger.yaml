@@ -1,0 +1,284 @@
+openapi: 3.0.0
+info:
+  title: Store API
+  contact: {}
+  version: '1.0'
+servers:
+- url: http://localhost:3000/api/v1
+  variables: {}
+paths:
+  /auth/register:
+    post:
+      tags:
+      - Auth
+      summary: Register
+      operationId: Register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/RegisterRequest'
+              - example:
+                  name: Abubakr
+                  email: abubakr@gmail.com
+                  password: secret
+            example:
+              name: Abubakr
+              email: abubakr@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /auth/login:
+    post:
+      tags:
+      - Auth
+      summary: Login
+      operationId: Login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/LoginRequest'
+              - example:
+                  email: abubakr@gmail.com
+                  password: secret
+            example:
+              email: abubakr@gmail.com
+              password: secret
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /products/add:
+    post:
+      tags:
+      - Products
+      summary: Add New Product
+      description: You must be authorized by token to use this API method , you can get token using Register or Login.
+      operationId: AddNewProduct
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/AddNewProductRequest'
+              - example:
+                  name: Gaming Chair
+                  price: 216
+            example:
+              name: Gaming Chair
+              price: 216
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+  /products:
+    get:
+      tags:
+      - Products
+      summary: Get All Products
+      description: >-
+        You can use this method without token (without register or login)
+
+
+        here you have option to use parameters  to manipulate the specific data as you want
+      operationId: GetAllProducts
+      parameters:
+      - name: numericFilters
+        in: query
+        description: ''
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: price>90,rating>=4.5
+      - name: sort
+        in: query
+        description: ''
+        style: form
+        explode: true
+        schema:
+          type: string
+          example: price
+      - name: limit
+        in: query
+        description: ''
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 10
+      - name: page
+        in: query
+        description: ''
+        style: form
+        explode: true
+        schema:
+          type: integer
+          format: int32
+          example: 1
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /products/{id}:
+    get:
+      tags:
+      - Products
+      summary: Get Product
+      description: You can use this method without token (without register or login)
+      operationId: GetProduct
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+    patch:
+      tags:
+      - Products
+      summary: Update Product Price
+      description: You must be authorized by token to use this API method , you can get token using Register or Login.
+      operationId: UpdateProductPrice
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              allOf:
+              - $ref: '#/components/schemas/UpdateProductPriceRequest'
+              - example:
+                  price: 30
+            example:
+              price: 30
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+    delete:
+      tags:
+      - Products
+      summary: Delete Product
+      description: You must be authorized by token to use this API method , you can get token using Register or Login.
+      operationId: DeleteProduct
+      parameters:
+      - name: id
+        in: path
+        description: ''
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+components:
+  schemas:
+    RegisterRequest:
+      title: RegisterRequest
+      required:
+      - name
+      - email
+      - password
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        name: Abubakr3
+        email: abubakr4@gmail.com
+        password: secret
+    LoginRequest:
+      title: LoginRequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: abubakr1@gmail.com
+        password: secret
+    AddNewProductRequest:
+      title: AddNewProductRequest
+      required:
+      - name
+      - price
+      type: object
+      properties:
+        name:
+          type: string
+        price:
+          type: integer
+          format: int32
+      example:
+        name: Gaming Chair
+        price: 216
+    UpdateProductPriceRequest:
+      title: UpdateProductPriceRequest
+      required:
+      - price
+      type: object
+      properties:
+        price:
+          type: integer
+          format: int32
+      example:
+        price: 30
+  securitySchemes:
+    httpBearer:
+      type: http
+      scheme: bearer
+security:
+- httpBearer: []
+tags:
+- name: Auth
+- name: Products
