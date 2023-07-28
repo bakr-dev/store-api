@@ -6,6 +6,8 @@ MONGO_URI
 
 JWT_SECRET
 
+JWT_LIFETIME = 30d
+
 After that run this command
 
 ```bash
