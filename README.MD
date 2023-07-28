@@ -13,3 +13,4 @@ After that run this command
 ```bash
 npm install && npm start
 ```
+now you can test the project using http://localhost:3000/
