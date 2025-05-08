@@ -1,10 +1,10 @@
 
 ## Key Features: 
-1- MVC as architectural design pattern
+1- MVC as architectural design pattern.
 2- Implementing (CRUD) concept and app logic using REST API & Express
-3- Authentication and authorization using JWT
+3- Authentication and authorization using JWT.
 4- Basic security packages like (helmet – cors – xss clean – express rate limit).
-5- Swagger Documentation Interface for all features
+5- Swagger Documentation Interface for all features.
 
 #### Project Setup
 
